@@ -10,6 +10,9 @@ import {
   Checkbox,
   CheckboxGroup,
   Col,
+  ContactCard,
+  ContactList,
+  ContactEdit,
   Dialog,
   Divider,
   Field,
@@ -22,6 +25,7 @@ import {
   List,
   NavBar,
   Panel,
+  Popup,
   PullRefresh,
   Row,
   Stepper,
@@ -45,6 +49,9 @@ Vue.use(CellGroup);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Col);
+Vue.use(ContactCard);
+Vue.use(ContactList);
+Vue.use(ContactEdit);
 Vue.use(Dialog);
 Vue.use(Divider);
 Vue.use(Field);
@@ -57,6 +64,7 @@ Vue.use(Lazyload);
 Vue.use(List);
 Vue.use(NavBar);
 Vue.use(Panel);
+Vue.use(Popup);
 Vue.use(PullRefresh);
 Vue.use(Row);
 Vue.use(Stepper);

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="title"></div>
+      <div class="item"></div>
+    </div>
+    <script>
+      const address = [
+        {
+          id: 1,
+          name: "jack",
+          tel: "13000000000",
+          province: "浙江省",
+          city: "杭州市",
+          county: "西湖区",
+          addressDetail: "文三路 138 号东方通信大厦 7 楼 501 室路",
+          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
+          areaCode: "360103",
+          postalCode: "360103",
+          isDefault: true,
+          href: "/home"
+        },
+        {
+          id: 2,
+          name: "lam",
+          tel: "13510740753",
+          province: "北京市",
+          city: "北京市",
+          county: "东城区",
+          addressDetail: "万寿路",
+          address: "北京市东城区万寿路",
+          areaCode: "110101",
+          postalCode: "110101",
+          isDefault: false,
+          href: "/home"
+        },
+        {
+          id: 3,
+          name: "lucy",
+          tel: "13511234563",
+          province: "广东省",
+          city: "深圳市",
+          county: "龙华区",
+          addressDetail: "嘉熙业",
+          address: "广东省深圳市龙华区嘉熙业",
+          areaCode: "440309",
+          postalCode: "440309",
+          isDefault: false,
+          href: "/home"
+        }
+      ];
+      var max = 0;
+      var res = address.forEach((item, i) => {
+        if (item.id > max) {
+          max = item.id;
+        }
+      });
+      console.log(max);
+      var res = address.reduce((prev, item) => {
+        return (prev = prev > item.id ? prev : item.id);
+      }, 0);
+      console.log(res);
+    </script>
+  </body>
+</html>

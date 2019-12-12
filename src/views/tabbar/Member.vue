@@ -12,5 +12,26 @@
     <van-button type="primary" size="large">退出登录</van-button>
   </div>
 </template>
-<script></script>
+<script>
+import { mapActions } from "vuex";
+export default{
+  created(){
+    // this.getAddr()
+  },
+  methods:{
+    ...mapActions([
+      // 去vuex的actions中取出名为getAddr的函数放到此地
+      "getAddr"
+    ])
+    /**
+     * login(user){
+     *   this.$store.dispatch("login",user)
+     * },
+     * logout(){...},
+     * register(){...}
+     */
+  }
+}
+
+</script>
 <style lang="scss" scoped></style>

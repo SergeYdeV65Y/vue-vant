@@ -54,7 +54,8 @@ const routes = [
       )
   },
   {
-    path: "/member/addressedit",
+    path: "/member/addressedit/:id",
+    props: true,
     name: "addressedit",
     component: () =>
       import(
@@ -70,10 +71,3 @@ const router = new VueRouter({
 });
 
 export default router;
-
-// {
-//   path: '/details/:lid',
-//   props:true,
-//   name: 'details',
-//   component: () => import(/* webpackChunkName: "details" */ '../views/Details.vue')
-// }

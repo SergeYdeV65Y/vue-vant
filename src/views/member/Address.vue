@@ -13,37 +13,42 @@
 </template>
 <script>
 import { Toast } from "vant";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
-      chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          href: "/home"
-        },
-        {
-          id: "2",
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-          href: "/home"
-        }
-      ]
+      chosenAddressId: "",
+      list: []
     };
   },
+  created() {
+    this.getAddressList();
+    this.getChosenAddressId();
+  },
   methods: {
+    getAddressList() {
+      this.list =
+        JSON.parse(localStorage.getItem("address")) ||
+        JSON.parse(sessionStorage.getItem("address")) ||
+        this.address;
+    },
+    getChosenAddressId() {
+      var o = this.list.filter(item => {
+        return item.isDefault === true;
+      });
+      this.chosenAddressId = o[0].id;
+    },
     onAdd() {
       Toast("新增地址");
       this.$router.push("/member/addressadd");
     },
     onEdit(item, index) {
-      Toast("编辑地址:" + index + item.href);
-      this.$router.push("/member/addressedit");
+      Toast("编辑地址:" + index + item.id);
+      this.$router.push(`/member/addressedit/${item.id}`);
     }
+  },
+  computed: {
+    ...mapState(["address"])
   }
 };
 </script>

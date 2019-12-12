@@ -258,3 +258,137 @@ export default {
   }
 };
 ```
+
+## address
+
+```js
+const address = [
+  {
+    id: 1,
+    name: "jack",
+    tel: "13000000000",
+    province: "浙江省",
+    city: "杭州市",
+    county: "西湖区",
+    addressDetail: "文三路 138 号东方通信大厦 7 楼 501 室路",
+    address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
+    areaCode: "360103",
+    postalCode: "360103",
+    isDefault: true,
+    href: "/home"
+  },
+  {
+    id: 2,
+    name: "lam",
+    tel: "13510740753",
+    province: "北京市",
+    city: "北京市",
+    county: "东城区",
+    addressDetail: "万寿路",
+    address: "北京市东城区万寿路",
+    areaCode: "110101",
+    postalCode: "110101",
+    isDefault: false,
+    href: "/home"
+  },
+  {
+    id: 3,
+    name: "lucy",
+    tel: "13511234563",
+    province: "广东省",
+    city: "深圳市",
+    county: "龙华区",
+    addressDetail: "嘉熙业",
+    address: "广东省深圳市龙华区嘉熙业",
+    areaCode: "440309",
+    postalCode: "440309",
+    isDefault: false,
+    href: "/home"
+  }
+];
+```
+
+## vue-router 中 name 的用法
+
+```js
+export default new Router({
+  routes: [
+    {
+      path: "/",
+      name: "HelloWorld",
+      component: HelloWorld
+    },
+    {
+      path: "/textInner",
+      name: "textInner",
+      component: text
+    },
+    {
+      path: "/text/:id",
+      component: param
+    }
+  ]
+});
+```
+
+第一种用法：通过 name 属性，为一个页面中不同的 router-view 渲染不同的组件，如：将上面代码的 HelloWorld 渲染在 name 为 HelloWorld 的 router-view 中，将 textInner 渲染在 name 为 textInner 的 router-view 中，不设置 name 的将为默认的渲染组件。
+
+```html
+<template>
+  <div id="app">
+    <router-view></router-view>
+    <!-- 将渲染HelloWorld组件 -->
+    <router-view name="HelloWorld"></router-view>
+    <!-- 将渲染textInner组件 -->
+    <router-view name="textInner"></router-view>
+  </div>
+</template>
+```
+
+第二种用法：使用\$router.name 获取组件 name 值
+
+```html
+<template>
+  <div id="app">
+    <p>{{ $route.name }}</p>
+    <!-- 可以获取到渲染进来的组件的name值;点击谁的路由就显示路由的name值 -->
+    <router-view></router-view>
+  </div>
+</template>
+```
+
+第三种用法：页面渲染时传递参数
+
+```html
+<template>
+  <div id="app">
+    <!-- 向name为helloWorld的组件传参数id，值为11 -->
+    <router-link :to="{name:'helloWorld', params:{id: '11'}}">
+      hello
+    </router-link>
+    <router-view></router-view>
+  </div>
+</template>
+```
+
+## 封装组件 panel
+
+html 结构
+
+```html
+<div class="panel">
+  <div class="title"></div>
+  <div class="item"></div>
+</div>
+```
+
+在项目目录 assets 下新建文件夹 css，在 css 文件夹里创建 panel.css 文件，样式结构如下
+
+```css
+.panel {
+}
+.panel .title {
+}
+.panel .item {
+}
+```

@@ -26,6 +26,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   data() {
@@ -35,8 +36,13 @@ export default {
   },
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
+    this.getAddr()
   },
   methods: {
+    ...mapActions([
+      // 去vuex的actions中取出名为getAddr的函数放到此地
+      "getAddr"
+    ]),
     // 点击后退
     goBack() {
       this.$router.go(-1);
@@ -71,6 +77,6 @@ export default {
 }
 .v-enter-active,
 .v-leave-active {
-  transition: transform .1s ease;
+  transition: transform 0.1s ease;
 }
 </style>
