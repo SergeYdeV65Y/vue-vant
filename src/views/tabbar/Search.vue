@@ -1,78 +1,117 @@
 <template>
   <div class="about">
-    <!-- 轮播图 -->
-    <!-- <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img v-lazy="image" @click="getImg" />
-      </van-swipe-item>
-    </van-swipe> -->
-    <!-- 联系人 -->
-      <van-swipe-cell>
-        <van-address-list
-          v-model="chosenAddressId"
-          :list="list"
-        />
-      </van-swipe-cell>
-    {{$store.getters.getAddress}}
+    <div class="panel">
+      <div class="left">
+        <van-icon name="location-o" />
+      </div>
+      <div class="center">
+        <p>
+          <span>{{ getAddress.name }}</span>
+          <span>{{ getAddress.tel }}</span>
+        </p>
+        <p>{{ getAddress.address }}</p>
+      </div>
+      <div class="right">
+        <!-- <van-cell is-link @click="showPopup"> -->
+        <van-icon name="arrow" @click="showPopup" />
+        <!-- </van-cell> -->
+      </div>
+    </div>
     <!-- <van-divider /> -->
-    <van-panel title="支付方式" status="在线支付">
-    </van-panel>
+    <van-panel title="支付方式" status="在线支付"> </van-panel>
+
+    <van-popup v-model="flag" position="top" round>
+      <div class="panel" v-for="item in address" :key="item.id">
+        <div class="left" v-if="item.isDefault === true">
+          <van-icon name="location-o" />
+          <van-divider />
+        </div>
+        <div class="left active" v-else>
+          <van-icon name="location-o" />
+        </div>
+        <div class="center">
+          <p>
+            <span>{{ item.name }}</span>
+            <span>{{ item.tel }}</span>
+          </p>
+          <p>{{ item.address }}</p>
+        </div>
+        <router-link class="right" :to="`/member/addressedit/${item.id}`">
+          <!-- <van-icon name="arrow" @click="show" /> -->
+          编辑
+        </router-link>
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
-import { ImagePreview } from "vant";
+import { mapState, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "张三",
-          tel: "13000000000",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          href: "/home"
-        },
-        {
-          id: "2",
-          name: "李四",
-          tel: "1310000000",
-          address: "浙江省杭州市拱墅区莫干山路 50 号",
-          href: "/home"
-        }
-      ]
+      flag: false,
+      list: ""
     };
   },
+  created() {
+    // this.list = this.address.filter(item => item.isDefault === false);
+    console.log(this.address);
+    console.log(this.$route);
+    
+  },
   methods: {
-    // onAdd() {
-    //   Toast("新增地址");
-    //   this.$router.push("/member/addressadd");
-    // },
-    // onEdit(item, index) {
-    //   Toast("编辑地址:" + index + item.href);
-    //   this.$router.push("/member/addressedit");
-    // }
+    show() {
+      console.log(1);
+    },
+    showPopup() {
+      this.flag = true;
+    }
+  },
+  computed: {
+    ...mapState(["address"]),
+    ...mapGetters(["getAddress"])
   }
-
-  // data() {
-  //   return {
-  //     images: [
-  //       "https://img.yzcdn.cn/vant/apple-1.jpg",
-  //       "https://img.yzcdn.cn/vant/apple-2.jpg"
-  //     ]
-  //   };
-  // },
-  // methods: {
-  //   getImg() {
-  //     ImagePreview(this.images);
-  //   }
-  // }
 };
 </script>
 <style lang="scss" scoped>
 .about {
-  img {
-    width: 100%;
+  padding: 10px;
+  .panel {
+    display: flex;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    .left {
+      display: flex;
+      width: 15%;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #f00;
+      &.active {
+        color: #000;
+      }
+    }
+    .center {
+      display: flex;
+      width: 70%;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      p {
+        margin: 3px 0;
+        padding: 0;
+        font-size: 12px;
+        span:first-child {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    .right {
+      display: flex;
+      width: 15%;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 </style>

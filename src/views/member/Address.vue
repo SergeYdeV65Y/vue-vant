@@ -4,7 +4,7 @@
     <van-swipe-cell>
       <van-address-list
         v-model="chosenAddressId"
-        :list="list"
+        :list="address"
         @add="onAdd"
         @edit="onEdit"
       />
@@ -17,26 +17,20 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
-      chosenAddressId: "",
-      list: []
+      chosenAddressId: ""
     };
   },
   created() {
-    this.getAddressList();
+    // this.getChosenAddressId();
+  },
+  mounted() {
     this.getChosenAddressId();
   },
   methods: {
-    getAddressList() {
-      this.list =
-        JSON.parse(localStorage.getItem("address")) ||
-        JSON.parse(sessionStorage.getItem("address")) ||
-        this.address;
-    },
     getChosenAddressId() {
-      var o = this.list.filter(item => {
-        return item.isDefault === true;
-      });
-      this.chosenAddressId = o[0].id;
+      this.chosenAddressId = this.address.filter(
+        item => item.isDefault === true
+      )[0].id;
     },
     onAdd() {
       Toast("新增地址");

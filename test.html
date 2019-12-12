@@ -1,72 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="panel">
-      <div class="title"></div>
-      <div class="item"></div>
+<template>
+    <div class="about">
+      <!-- 轮播图 -->
+      <!-- <van-swipe :autoplay="3000">
+        <van-swipe-item v-for="(image, index) in images" :key="index">
+          <img v-lazy="image" @click="getImg" />
+        </van-swipe-item>
+      </van-swipe> -->
+      <!-- 联系人 -->
     </div>
-    <script>
-      const address = [
-        {
-          id: 1,
-          name: "jack",
-          tel: "13000000000",
-          province: "浙江省",
-          city: "杭州市",
-          county: "西湖区",
-          addressDetail: "文三路 138 号东方通信大厦 7 楼 501 室路",
-          address: "浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室",
-          areaCode: "360103",
-          postalCode: "360103",
-          isDefault: true,
-          href: "/home"
-        },
-        {
-          id: 2,
-          name: "lam",
-          tel: "13510740753",
-          province: "北京市",
-          city: "北京市",
-          county: "东城区",
-          addressDetail: "万寿路",
-          address: "北京市东城区万寿路",
-          areaCode: "110101",
-          postalCode: "110101",
-          isDefault: false,
-          href: "/home"
-        },
-        {
-          id: 3,
-          name: "lucy",
-          tel: "13511234563",
-          province: "广东省",
-          city: "深圳市",
-          county: "龙华区",
-          addressDetail: "嘉熙业",
-          address: "广东省深圳市龙华区嘉熙业",
-          areaCode: "440309",
-          postalCode: "440309",
-          isDefault: false,
-          href: "/home"
+  </template>
+  <script>
+  import { ImagePreview } from "vant";
+  export default {
+    data() {
+      return {
+        images: [
+          "https://img.yzcdn.cn/vant/apple-1.jpg",
+          "https://img.yzcdn.cn/vant/apple-2.jpg"
+        ]
+      };
+    },
+    methods: {
+      getImg() {
+        ImagePreview(this.images);
+      }
+    }
+  };
+  </script>
+  <style lang="scss" scoped>
+  .about {
+    img {
+      width: 100%;
+    }
+  }
+  </style>
+  
+  $("#patchBtn").click(function() {
+    // PATCH是一个新方法，可以当作是PUT方法的补充，主要用来做局部更新
+    $.ajax({
+      type: "patch",
+      url: "http://localhost:3000/fruits/" + $("#patchId").val(),
+      data: {
+        price: $("#patchPrice").val()
+      },
+      success: function(data) {
+        console.log("put success");
+      },
+      error: function() {
+        alert("put error");
+      }
+    });
+  });
+
+  $("#delAll").click(function() {
+    $.ajax({
+      type: "get",
+      url: "http://localhost:3000/fruits?_sort=id&_order=desc",
+      data: "",
+      success: function(data) {
+        if (data[0]) {
+          for (var i = 0; i <= data[0].id; i++) {
+            delFun(i);
+          }
         }
-      ];
-      var max = 0;
-      var res = address.forEach((item, i) => {
-        if (item.id > max) {
-          max = item.id;
-        }
-      });
-      console.log(max);
-      var res = address.reduce((prev, item) => {
-        return (prev = prev > item.id ? prev : item.id);
-      }, 0);
-      console.log(res);
-    </script>
-  </body>
-</html>
+        console.log("del success", data);
+      },
+      error: function() {
+        console.log("del error");
+      }
+    });
+    // http://localhost:3000/fruits?_sort=id&_order=desc
+    // 此处就没有动态去获取db.json中fruits的最大id，直接带入7
+  });
+
+  function delFun(id) {
+    $.ajax({
+      type: "delete",
+      url: "http://localhost:3000/fruits/" + id,
+      data: "",
+      success: function(data) {
+        console.log("del success", data);
+      },
+      error: function() {
+        console.log("del error");
+      }
+    });
+  }
+  function patchFun(id){
+    axios.get("/address?_sort=id&_order=desc").then(result=>{
+      for(var i =0;i <= result.data[0].id; i++){
+        axios.patch(`/address/${i}`,{isDefault:false})
+      }
+    })
+    axios.patch('/address/${addrInfo.id}',{isDefault:false})
+  }
+  $("#patchBtn").click(function() {
+    // PATCH是一个新方法，可以当作是PUT方法的补充，主要用来做局部更新
+    $.ajax({
+      type: "patch",
+      url: "http://localhost:3000/fruits/" + $("#patchId").val(),
+      data: {
+        price: $("#patchPrice").val()
+      },
+      success: function(data) {
+        console.log("put success");
+      },
+      error: function() {
+        alert("put error");
+      }
+    });
+  });
