@@ -139,7 +139,7 @@ export default {
       this.count++;
     },
     onSubmit() {
-      console.log(22);
+      this.$router.push("/cart/pay");
     }
   },
   computed: {

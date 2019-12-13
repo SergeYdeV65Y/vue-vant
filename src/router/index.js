@@ -61,6 +61,15 @@ const routes = [
       import(
         /* webpackChunkName: "addressedit" */ "../views/member/AddressEdit.vue"
       )
+  },
+  {
+    path: "/cart/pay",
+    props: true,
+    name: "pay",
+    component: () =>
+      import(
+        /* webpackChunkName: "pay" */ "../views/cart/Pay.vue"
+      )
   }
 ];
 

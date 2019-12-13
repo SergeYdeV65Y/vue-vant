@@ -10,7 +10,6 @@
       :area-columns-placeholder="['请选择', '请选择', '请选择']"
       @save="onSave"
       @delete="onDelete"
-      @change-detail="onChangeDetail"
       :address-info="addressInfo"
     />
   </div>
@@ -49,13 +48,11 @@ export default {
     ...mapMutations(["addAddr", "updateAddr", "delAddr"]),
     ...mapActions(["getAddr", "postAddr", "putAddr", "deleteAddr"]),
     getEditId() {
-      // var o = this.address.filter(item => {
-      //   return item.id == this.$route.params.id;
-      // });
-      // this.addressInfo = o[0];
-      this.addressInfo = this.address.filter(
+      var temp = this.address.filter(
         item => item.id == this.$route.params.id
       )[0];
+      temp.isDefault = temp.isDefault == 1 ? true : false;
+      this.addressInfo = temp;
     },
     onSave(content) {
       Toast("save");
@@ -69,7 +66,7 @@ export default {
         this.updateAddr(content);
         this.putAddr(content);
       } else {
-        // 需要先获取最大的id再 ++
+        // 需要先获取最大的 id 再 ++
         content.id =
           parseInt(
             this.address.reduce((prev, item) => {
@@ -79,29 +76,19 @@ export default {
         this.addAddr(content);
         this.postAddr(content);
       }
-      // setTimeout(() =>{
-      //   this.$router.push("/member/address");
-      // }, 400);
       // this.$router.push("/member/address");
-      this.$router.go(-1);
+      // 返回源路由
+      setTimeout(() => {
+        this.$router.go(-1);
+      }, 100);
     },
     onDelete(content) {
       Toast("delete");
       this.delAddr(content);
       this.deleteAddr(content);
-      this.$router.push("/member/address");
-    },
-    onChangeDetail(val) {
-      if (val) {
-        this.searchResult = [
-          {
-            name: "黄龙万科中心",
-            address: "杭州市西湖区"
-          }
-        ];
-      } else {
-        this.searchResult = [];
-      }
+      setTimeout(() => {
+        this.$router.go(-1);
+      }, 100);
     }
   },
   computed: {

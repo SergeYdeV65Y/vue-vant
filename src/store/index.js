@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import Qs from "qs";
 Vue.use(Vuex);
 
 // 每次刚进入网站便会调用 main.js，在调用的时候，先从本地存储中把地址的数据读出来，放到 store 中
@@ -13,7 +12,7 @@ export default new Vuex.Store({
     // address: ""
   },
   mutations: {
-    // 专门负责修改state中的变量
+    // 专门负责修改 state 中的变量
     // this.$store.commit('方法的名称', '按需传递唯一的参数')
     // 初始化
     setAddr(state, address) {
@@ -23,21 +22,21 @@ export default new Vuex.Store({
     // 添加地址
     addAddr(state, addrInfo) {
       state.address = state.address.map(item => {
-        if (addrInfo.isDefault === true) {
+        if (addrInfo.isDefault == 1) {
           // 取消所有默认
-          item.isDefault = false;
+          item.isDefault = 0;
         }
         return item;
       });
       state.address.unshift(addrInfo);
-      // 当更新之后，把对象数组存储到本地的 localStorage 中
+      // 当添加之后，把对象数组存储到本地的 localStorage 中
       localStorage.setItem("address", JSON.stringify(state.address));
     },
     // 更新地址
     updateAddr(state, addrInfo) {
       state.address = state.address.map(item => {
-        if (addrInfo.isDefault === true) {
-          item.isDefault = false;
+        if (addrInfo.isDefault == 1) {
+          item.isDefault = 0;
         }
         if (item.id == addrInfo.id) {
           item = addrInfo;
@@ -58,16 +57,18 @@ export default new Vuex.Store({
     // this.$store.getters.方法名
     // 获取默认地址
     getAddress(state) {
-      return state.address.filter(item => item.isDefault === true)[0];
+      return state.address.filter(item => item.isDefault == 1).length > 0
+        ? state.address.filter(item => item.isDefault == 1)[0]
+        : "";
     }
   },
   actions: {
-    // 专门负责发送异步ajax请求，从服务器端获取数据
+    // 专门负责发送异步 ajax 请求，从服务器端获取数据
     // this.$store.dispatch('方法名')
     getAddr(context) {
-      // context代表整个vuex对象
+      // context 代表整个 vuex 对象
       (async function() {
-        let result = await axios.get("/address?_sort=id&_order=desc");
+        let result = await axios.get("/address");
         context.commit("setAddr", result.data);
       })();
     },
@@ -79,10 +80,6 @@ export default new Vuex.Store({
       })();
     },
     async putAddr(context, addrInfo) {
-      // let s1 = await axios.get("/address?_sort=id&_order=desc");
-      // for (var i = 0; i <= s1.data[0].id; i++) {
-      //   axios.patch(`/address/${i}`, { isDefault: false });
-      // }
       let result = await axios.put(
         `/address/${addrInfo.id}`,
         // Qs.stringify(addrInfo)

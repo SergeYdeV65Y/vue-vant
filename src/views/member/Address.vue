@@ -21,16 +21,15 @@ export default {
     };
   },
   created() {
-    // this.getChosenAddressId();
-  },
-  mounted() {
     this.getChosenAddressId();
   },
+  mounted() {},
   methods: {
     getChosenAddressId() {
-      this.chosenAddressId = this.address.filter(
-        item => item.isDefault === true
-      )[0].id;
+      this.chosenAddressId =
+        this.address.filter(item => item.isDefault == 1).length > 0
+          ? this.address.filter(item => item.isDefault == 1)[0].id
+          : "";
     },
     onAdd() {
       Toast("新增地址");
