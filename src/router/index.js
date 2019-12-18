@@ -63,7 +63,7 @@ const routes = [
       )
   },
   {
-    path: "/cart/pay",
+    path: "/cart/pay/:arr",
     props: true,
     name: "pay",
     component: () =>

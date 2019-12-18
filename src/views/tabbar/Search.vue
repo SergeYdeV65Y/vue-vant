@@ -1,76 +1,82 @@
 <template>
   <div class="about">
-    <!-- 有默认地址 -->
-    <div class="panel" v-if="typeof getAddress === 'object'">
-      <div class="left">
-        <van-icon name="location-o" />
-      </div>
-      <div class="center">
-        <p>
-          <span>{{ getAddress.name }}</span>
-          <span>{{ getAddress.tel }}</span>
-        </p>
-        <p>{{ getAddress.address }}</p>
-      </div>
-      <div class="right">
-        <van-icon name="arrow" @click="showPopup" />
-      </div>
-    </div>
-    <!-- 没有默认地址 -->
-    <div class="panel" v-else>
-      <div class="center">
-        <router-link to="/member/address">
-          请添加收货地址
-        </router-link>
-      </div>
-      <div class="right">
-        <van-icon name="arrow" @click="showPopup" />
-      </div>
-    </div>
-
-    <van-panel title="支付方式" status="在线支付"> </van-panel>
-
-    <!-- popup 弹出层 -->
-    <van-popup v-model="flag" position="top" round>
-      <div class="panel" v-for="item in address" :key="item.id">
-        <div class="left" v-if="item.isDefault == 1">
-          <van-icon name="location-o" />
-          <van-divider />
-        </div>
-        <div class="left active" v-else>
-          <van-icon name="location-o" />
-        </div>
-        <div class="center">
-          <p>
-            <span>{{ item.name }}</span>
-            <span>{{ item.tel }}</span>
-          </p>
-          <p>{{ item.address }}</p>
-        </div>
-        <router-link class="right" :to="`/member/addressedit/${item.id}`">
-          编辑
-        </router-link>
-      </div>
-    </van-popup>
+    <h1 @click="addToCart(goodsinfo)">商品1加入购物车</h1>
+    <h1 @click="addToCart(goodsinfo2)">商品2加入购物车</h1>
+    <h1 @click="addToCart(goodsinfo3)">商品3加入购物车</h1>
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      flag: false,
-      list: ""
+      product: {
+        id: 1,
+        proName: "144757c三星标黑色", // 商品名称
+        proDesc: "指南针运动 NIKE HYPERSHIFT篮球鞋 844392-010-607-164-017现货", // 商品描述
+        market_price: 999, // 市场价
+        sell_price: 699, // 销售价
+        statu: 1, // 是否上架
+        updateTime: "2017-01-05 00:28:29", // 上架时间
+        stock: 500, // 库存
+        isDelete: 0,
+        src: "/img/1.jpg", // 图片
+        msrc: "/img/1-small.jpg", // 小图
+        click: 15 // 点击数
+      },
+      goodsinfo: {
+        id: 1,
+        uid: 1,
+        productId: 1,
+        num: 1, // 购买数量
+        value: 3,
+        size: 42,
+        isDelete: 0,
+        isSelected: 1,
+        price: 6999,
+        desc: "酷睿双核i5处理器|256GB SSD|8GB内存|英特尔HD显卡620含共享显卡内存",
+        title: "Apple MacBook Air系列",
+        name: "apple",
+        thumb: "http://112.74.206.213/img/product/md/57ad359dNd4a6f130.jpg"
+      },
+      goodsinfo2: {
+        id: 2,
+        uid: 1,
+        productId: 2,
+        num: 2, // 购买数量
+        value: 3,
+        size: 42,
+        isDelete: 0,
+        isSelected: 1,
+        price: 3899,
+        desc: "酷睿双核i5处理器|512GB SSD|2GB内存|英特尔HD独立显卡",
+        title: "小米Air 金属超轻薄",
+        name: "huawei",
+        thumb: "http://112.74.206.213/img/product/md/57ad8846N64ac3c79.jpg"
+      },
+      goodsinfo3: {
+        id: 3,
+        uid: 1,
+        productId: 3,
+        num: 1, // 购买数量
+        value: 3,
+        size: 42,
+        isDelete: 0,
+        isSelected: 1,
+        price: 99,
+        desc: "8825789",
+        title: "华硕RX310 金属超极本",
+        name: "华硕(ASUS)13.3英寸RX310UQ金属超极本 学生 商务手提轻薄便携超薄笔记本电脑 玫瑰金 13.3英寸I3-7100U/4G/128G固态",
+        thumb: "http://112.74.206.213/img/product/md/57ba6a56N1e3e3d63.jpg"
+      }
     };
   },
   created() {},
   methods: {
-    showPopup() {
-      this.flag = true;
-    }
+    ...mapMutations(["addToCart"])
   },
   computed: {
-    ...mapState(["address"]),
+    ...mapState(["cart"]),
     ...mapGetters(["getAddress"])
   }
 };

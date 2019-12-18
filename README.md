@@ -265,6 +265,7 @@ export default {
 const address = [
   {
     id: 1,
+    uid: 1,
     name: "jack",
     tel: "13000000000",
     province: "浙江省",
@@ -275,10 +276,12 @@ const address = [
     areaCode: "360103",
     postalCode: "360103",
     isDefault: true,
-    href: "/home"
+    href: "/home",
+    isDelete: 0
   },
   {
     id: 2,
+    uid: 1,
     name: "lam",
     tel: "13510740753",
     province: "北京市",
@@ -289,10 +292,12 @@ const address = [
     areaCode: "110101",
     postalCode: "110101",
     isDefault: false,
-    href: "/home"
+    href: "/home",
+    isDelete: 0
   },
   {
     id: 3,
+    uid: 1,
     name: "lucy",
     tel: "13511234563",
     province: "广东省",
@@ -303,7 +308,8 @@ const address = [
     areaCode: "440309",
     postalCode: "440309",
     isDefault: false,
-    href: "/home"
+    href: "/home",
+    isDelete: 0
   }
 ];
 ```
@@ -392,3 +398,44 @@ html 结构
 .panel .item {
 }
 ```
+
+## cart
+
+```js
+const cart = [
+  {
+    id: 1,
+    uid: 1,
+    productId: 1,
+    num: 2, // 购买数量
+    size: 42,
+    isDelete: 0,
+    isSelected: 1
+  },
+```
+
+## product
+
+```js
+const product = [
+  {
+    id: 1,
+    proName: "144757c三星标黑色", // 商品名称
+    proDesc: "指南针运动 NIKE HYPERSHIFT篮球鞋 844392-010-607-164-017现货", // 商品描述
+    market_price: 999, // 市场价
+    sell_price: 699, // 销售价
+    statu: 1, // 是否上架
+    updateTime: "2017-01-05 00:28:29", // 上架时间
+    stock: 500, // 库存
+    isDelete: 0,
+    src: "/img/1.jpg", // 图片
+    msrc: "/img/1-small.jpg", // 小图
+    click: 15 // 点击数
+  }
+];
+```
+
+## 项目后端结构
+
+接口采用 restful 原则设计，方便统一请求业务功能
+接口文件按功能划分，方便阅读维护

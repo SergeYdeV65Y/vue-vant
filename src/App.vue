@@ -16,7 +16,7 @@
       <van-tabbar-item to="/search" icon="search">
         发现
       </van-tabbar-item>
-      <van-tabbar-item to="/cart" icon="shopping-cart-o" info="5">
+      <van-tabbar-item to="/cart" icon="shopping-cart-o" :info="getAllCount">
         购物车
       </van-tabbar-item>
       <van-tabbar-item to="/member" icon="user-circle-o">
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   data() {
@@ -36,11 +36,11 @@ export default {
   },
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
-    this.getAddr()
+    this.getAddr();
   },
   methods: {
     ...mapActions([
-      // 去vuex的actions中取出名为getAddr的函数放到此地
+      // 去vuex的actions中取出名为 getAddr的函数放到此地
       "getAddr"
     ]),
     // 点击后退
@@ -51,6 +51,9 @@ export default {
         icon: "like-o"
       });
     }
+  },
+  computed: {
+    ...mapGetters(["getAllCount"])
   },
   watch: {
     // 不能使用箭头函数
