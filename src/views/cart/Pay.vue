@@ -18,13 +18,10 @@
     </div>
     <!-- 没有默认地址 -->
     <div class="panel" v-else>
-      <div class="center">
+      <div class="extra">
         <router-link to="/member/address">
           请添加收货地址
         </router-link>
-      </div>
-      <div class="right">
-        <van-icon name="arrow" @click="showPopup" />
       </div>
     </div>
 
@@ -63,6 +60,13 @@
         <router-link class="right" :to="`/member/addressedit/${item.id}`">
           编辑
         </router-link>
+      </div>
+      <div class="panel">
+        <div class="extra">
+          <router-link to="/member/address">
+            添加新收货地址
+          </router-link>
+        </div>
       </div>
     </van-popup>
   </div>
@@ -158,6 +162,13 @@ export default {
     .right {
       display: flex;
       width: 15%;
+      justify-content: center;
+      align-items: center;
+    }
+    .extra {
+      display: flex;
+      width: 100%;
+      height: 40px;
       justify-content: center;
       align-items: center;
     }

@@ -27,7 +27,6 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -48,10 +47,6 @@ export default {
     // 点击后退
     goBack() {
       this.$router.go(-1);
-      Toast({
-        message: "自定义图标",
-        icon: "like-o"
-      });
     }
   },
   computed: {
