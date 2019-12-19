@@ -73,23 +73,25 @@ export default {
   props: ["arr"],
   data() {
     return {
-      flag: false,
-      goods: [],
-      price: 0,
-      num: 0
+      flag: false, // 地址弹出层
+      goods: [], // 商品信息
+      price: 0, // 总价
+      num: 0 // 总件数
     };
   },
   created() {
+    // 结算订单商品详情
     this.getGoods(this.arr);
+    // 商品总价总件数
     this.getTotal();
   },
   methods: {
+    showPopup() {
+      this.flag = true;
+    },
     // 结算订单
     onSubmit() {
       console.log(1);
-    },
-    showPopup() {
-      this.flag = true;
     },
     getGoods(id) {
       this.arr.split("&").forEach(arrItem => {
@@ -107,6 +109,7 @@ export default {
         num += item.num;
         sum += item.price * 100 * item.num;
       }
+      // 商品总价总件数
       this.price = sum;
       this.num = num;
     }
@@ -168,6 +171,8 @@ export default {
     border: 2px solid #f00;
   }
   .van-submit-bar {
+    position: fixed;
+    bottom: 50px;
     .van-checkbox {
       margin-left: 15px;
     }

@@ -50,78 +50,40 @@
 </template>
 <script>
 import { Dialog, Toast } from "vant";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
       flag: true,
       checked: "", // submit
       result: [], // checkbox-group
-      count: 1 // toggle
-      // list: [
-      //   {
-      //     id: 1,
-      //     name: "a",
-      //     value: 1,
-      //     price: 2.0,
-      //     desc: "5123",
-      //     title: "apple",
-      //     thumb: "https://img.yzcdn.cn/vant/t-thirt.jpg"
-      //   },
-      //   {
-      //     id: 2,
-      //     name: "b",
-      //     value: 1,
-      //     price: 3.0,
-      //     desc: "5585123",
-      //     title: "huwei",
-      //     thumb: "https://img.yzcdn.cn/vant/t-thirt.jpg"
-      //   },
-      //   {
-      //     id: 3,
-      //     name: "c",
-      //     value: 1,
-      //     price: 4.0,
-      //     desc: "585123",
-      //     title: "lennvo",
-      //     thumb: "https://img.yzcdn.cn/vant/t-thirt.jpg"
-      //   },
-      //   {
-      //     id: 4,
-      //     name: "d",
-      //     value: 1,
-      //     price: 5.0,
-      //     desc: "5258",
-      //     title: "lennvo",
-      //     thumb: "https://img.yzcdn.cn/vant/t-thirt.jpg"
-      //   },
-      //   {
-      //     id: 5,
-      //     name: "e",
-      //     value: 1,
-      //     price: 6.0,
-      //     desc: "789",
-      //     title: "lennvo",
-      //     thumb: "https://img.yzcdn.cn/vant/t-thirt.jpg"
-      //   }
-      // ]
+      count: 1, // toggle
+      canclick: true // 防抖开关
     };
   },
   created() {
-    // this.result.push(this.list[0].name);
     this.cart.length > 0 ? this.result.push(this.cart[0].id) : "";
   },
   methods: {
-    ...mapMutations(["updataGoodsInfo", "removeGoodsInfo"]),
+    ...mapMutations(["updateGoodsInfo", "removeGoodsInfo"]),
+    ...mapActions(["putCart", "deleteCart"]),
     // 修改购物车商品数量
     changeNum(e, i) {
       if (e.target && e.target.nodeName == "BUTTON") {
-        this.updataGoodsInfo(this.cart[i]);
+        if (this.canclick) {
+          this.canclick = false;
+          setTimeout(() => {
+            this.putCart(this.cart[i]);
+            this.canclick = true;
+          }, 1000);
+        }
+        // this.updateGoodsInfo(this.cart[i]);
       }
     },
     // 批量删除购物车商品
     delAll() {
-      this.removeGoodsInfo(this.result);
+      // this.removeGoodsInfo(this.result);
+      this.deleteCart(this.result);
     },
     // 切换批量删除功能
     manage() {
@@ -141,7 +103,8 @@ export default {
           })
             .then(() => {
               var index = instance.$vnode.data.attrs["data-index"];
-              this.removeGoodsInfo(this.cart[index]);
+              // this.removeGoodsInfo(this.cart[index]);
+              this.deleteCart(this.cart[index]);
               instance.close();
             })
             .catch(() => {
@@ -197,7 +160,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .cart {
   padding: 5px;
   .van-col {

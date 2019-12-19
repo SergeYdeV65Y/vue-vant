@@ -17,7 +17,7 @@ import axios from "axios";
 
 export async function getBanner() {
   try {
-    const result = await axios.get("http://localhost:3000/carousel");
+    const result = await axios.get("/carousel");
     return result.data;
   } catch (err) {
     console.log(err);

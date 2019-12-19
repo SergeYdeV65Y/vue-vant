@@ -13,62 +13,16 @@ export default new Vuex.Store({
     cart: cart
   },
   mutations: {
-    addToCart(state, goodsinfo) {
-      // 如果购物车中，之前就已经有这个对应的商品了，那么只需要更新数量
-      // 如果没有，则直接把商品数据，push 到 cart 中即可
-      // 假设在购物车中，没有找到对应的商品
-      var flag = false;
-      state.cart.some(item => {
-        if (item.id == goodsinfo.id) {
-          item.num += parseInt(goodsinfo.num);
-          flag = true;
-          return true;
-        }
-      });
-      // 如果最终循环完毕，得到的 flag 还是 false，则把商品数据直接 push 到购物车中
-      if (!flag) {
-        state.cart.unshift(goodsinfo);
-      }
-      // 当添加之后，把对象数组存储到本地的 localStorage 中
-      localStorage.setItem("cart", JSON.stringify(state.cart));
-    },
-    updataGoodsInfo(state, goodsinfo) {
-      // 修改购物车中商品的数量值
-      state.cart.some(item => {
-        if (item.id == goodsinfo.id) {
-          item.num = parseInt(goodsinfo.num);
-          return true;
-        }
-      });
-      localStorage.setItem("cart", JSON.stringify(state.cart));
-    },
-    removeGoodsInfo(state, obj) {
-      if (obj instanceof Array) {
-        // 如果是数组，则是批量删除
-        obj.forEach(objItem => {
-          state.cart.forEach((item, i) => {
-            if (item.id == objItem) {
-              state.cart.splice(i, 1);
-            }
-          });
-        });
-      } else {
-        // 单项删除
-        state.cart.forEach((item, i) => {
-          if (item.id == obj.id) {
-            state.cart.splice(i, 1);
-            return true;
-          }
-        });
-      }
-      localStorage.setItem("cart", JSON.stringify(state.cart));
-    },
     // 专门负责修改 state 中的变量
     // this.$store.commit('方法的名称', '按需传递唯一的参数')
     // 初始化
     setAddr(state, address) {
       state.address = address;
       localStorage.setItem("address", JSON.stringify(state.address));
+    },
+    setCart(state, cart) {
+      state.cart = cart;
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     // 添加地址
     addAddr(state, addrInfo) {
@@ -102,6 +56,58 @@ export default new Vuex.Store({
         return item.id !== addrInfo.id;
       });
       localStorage.setItem("address", JSON.stringify(state.address));
+    },
+    // 商品加入购物车
+    addToCart(state, goodsinfo) {
+      // 如果购物车中，之前就已经有这个对应的商品了，那么只需要更新数量
+      // 如果没有，则直接把商品数据，push 到 cart 中即可
+      // 假设在购物车中，没有找到对应的商品
+      var flag = false;
+      state.cart.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.num += parseInt(goodsinfo.num);
+          flag = true;
+          return true;
+        }
+      });
+      // 如果最终循环完毕，得到的 flag 还是 false，则把商品数据直接 push 到购物车中
+      if (!flag) {
+        state.cart.unshift(goodsinfo);
+      }
+      // 当添加之后，把对象数组存储到本地的 localStorage 中
+      localStorage.setItem("cart", JSON.stringify(state.cart));
+    },
+    updateGoodsInfo(state, goodsinfo) {
+      // 修改购物车中商品的数量值
+      state.cart.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.num = parseInt(goodsinfo.num);
+          return true;
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(state.cart));
+    },
+    // 删除购物车商品
+    removeGoodsInfo(state, obj) {
+      if (obj instanceof Array) {
+        // 如果是数组，则是批量删除
+        obj.forEach(objItem => {
+          state.cart.forEach((item, i) => {
+            if (item.id == objItem) {
+              state.cart.splice(i, 1);
+            }
+          });
+        });
+      } else {
+        // 单项删除
+        state.cart.forEach((item, i) => {
+          if (item.id == obj.id) {
+            state.cart.splice(i, 1);
+            return true;
+          }
+        });
+      }
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     }
   },
   getters: {
@@ -149,6 +155,28 @@ export default new Vuex.Store({
     async deleteAddr(context, addrInfo) {
       var result = await axios.delete(`/address/${addrInfo.id}`);
       context.dispatch("getAddr");
+    },
+    getCart(context) {
+      (async function() {
+        var result = await axios.get("/cart");
+        context.commit("setCart", result.data);
+      })();
+    },
+    async getCart(context) {
+      var result = await axios.get("/cart");
+      context.commit("setCart", result.data);
+    },
+    async postCart(context, goodsInfo) {
+      var result = await axios.post("/cart", goodsInfo);
+      context.dispatch("getCart");
+    },
+    async putCart(context, goodsInfo) {
+      var result = await axios.put("/cart", goodsInfo);
+      context.dispatch("getCart");
+    },
+    async deleteCart(context, goodsInfo) {
+      var result = await axios.delete("/cart", { data: goodsInfo });
+      context.dispatch("getCart");
     }
   },
   modules: {}

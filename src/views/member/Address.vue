@@ -12,18 +12,16 @@
   </div>
 </template>
 <script>
-import { Toast } from "vant";
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      chosenAddressId: ""
+      chosenAddressId: "" // 默认地址
     };
   },
   created() {
     this.getChosenAddressId();
   },
-  mounted() {},
   methods: {
     getChosenAddressId() {
       this.chosenAddressId =
@@ -32,11 +30,9 @@ export default {
           : "";
     },
     onAdd() {
-      Toast("新增地址");
       this.$router.push("/member/addressadd");
     },
     onEdit(item, index) {
-      Toast("编辑地址:" + index + item.id);
       this.$router.push(`/member/addressedit/${item.id}`);
     }
   },

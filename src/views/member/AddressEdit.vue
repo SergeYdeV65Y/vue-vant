@@ -96,8 +96,8 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-#addressedit {
+<style lang="scss" scoped>
+.addressedit {
   // .van-popup--bottom {
   //   height: 50% !important;
   // }

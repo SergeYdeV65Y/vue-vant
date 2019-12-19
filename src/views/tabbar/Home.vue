@@ -81,7 +81,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.mt {
-  margin-top: 10px;
+.home {
+  .mt {
+    margin-top: 10px;
+  }
 }
 </style>

@@ -37,11 +37,13 @@ export default {
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
     this.getAddr();
+    this.getCart();
   },
   methods: {
     ...mapActions([
       // 去vuex的actions中取出名为 getAddr的函数放到此地
-      "getAddr"
+      "getAddr",
+      "getCart"
     ]),
     // 点击后退
     goBack() {
@@ -63,23 +65,23 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .app-container {
   overflow-x: hidden;
   padding-top: 50px;
   padding-bottom: 100px;
-}
-.v-enter {
-  opacity: 0;
-  transform: translateX(100%);
-}
-.v-leave-to {
-  opacity: 0;
-  transform: translateX(-100%);
-  position: absolute;
-}
-.v-enter-active,
-.v-leave-active {
-  transition: transform 0.1s ease;
+  .v-enter {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  .v-leave-to {
+    opacity: 0;
+    transform: translateX(-100%);
+    position: absolute;
+  }
+  // .v-enter-active,
+  // .v-leave-active {
+  //   transition: transform 0.1s ease;
+  // }
 }
 </style>
