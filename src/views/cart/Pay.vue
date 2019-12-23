@@ -72,6 +72,8 @@
   </div>
 </template>
 <script>
+import { getPay, createOrder } from "../../assets/api/pay.js";
+import { Dialog } from "vant";
 import { mapState, mapGetters } from "vuex";
 export default {
   props: ["arr"],
@@ -95,7 +97,36 @@ export default {
     },
     // 结算订单
     onSubmit() {
-      console.log(1);
+      var goodsName = "小米";
+      var count = 5;
+      var price = 20;
+      var cost = 100;
+      var payName = "root";
+      var data = {
+        payName: payName,
+        goodsName: goodsName,
+        count: count,
+        price: price,
+        cost: cost
+      };
+      getPay(data).then(result => {
+        if (result.code == 200) {
+          console.log(this.goods);
+          Dialog.confirm({
+            title: "确认支付此订单？"
+          })
+            .then(() => {
+              // on confirm
+              createOrder(data).then(result => {
+                document.body.innerHTML = result;
+                document.querySelector("[id^=alipaySDKSubmit]").submit();
+              });
+            })
+            .catch(() => {
+              // on cancel
+            });
+        }
+      });
     },
     getGoods(id) {
       this.arr.split("&").forEach(arrItem => {

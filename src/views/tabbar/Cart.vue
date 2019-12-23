@@ -83,7 +83,16 @@ export default {
     // 批量删除购物车商品
     delAll() {
       // this.removeGoodsInfo(this.result);
-      this.deleteCart(this.result);
+      Dialog.confirm({
+        title: "确认删除此商品？"
+      })
+        .then(() => {
+          // on confirm
+          this.deleteCart(this.result);
+        })
+        .catch(() => {
+          // on cancel
+        });
     },
     // 切换批量删除功能
     manage() {
