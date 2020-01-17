@@ -1,5 +1,6 @@
 <template>
   <div class="account">
+    <navbar title="修改密码"></navbar>
     <van-cell-group>
       <van-field
         v-model="oldpassword"
@@ -46,6 +47,7 @@
   </div>
 </template>
 <script>
+import navbar from "../../components/Navbar";
 export default {
   data() {
     return {
@@ -54,7 +56,14 @@ export default {
       ckpassword: "",
       sms: ""
     };
+  },
+  components: {
+    navbar
   }
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.account {
+  padding-top: 50px;
+}
+</style>

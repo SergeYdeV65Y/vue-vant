@@ -1,5 +1,6 @@
 <template>
   <div class="address">
+    <navbar title="我的收货地址"></navbar>
     <van-cell-group> </van-cell-group>
     <van-swipe-cell>
       <van-address-list
@@ -13,6 +14,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import navbar from "../../components/Navbar";
 export default {
   data() {
     return {
@@ -38,7 +40,18 @@ export default {
   },
   computed: {
     ...mapState(["address"])
+  },
+  components: {
+    navbar
   }
 };
 </script>
-<style scoped lang="scss"></style>
+<style lang="scss">
+.address {
+  padding: 50px 0 0 0;
+  .van-radio__icon--round .van-icon {
+    border-radius: 100%;
+    border: 1px solid #666;
+  }
+}
+</style>

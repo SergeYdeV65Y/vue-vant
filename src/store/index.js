@@ -120,11 +120,10 @@ export default new Vuex.Store({
     },
     // 获取商品总件数
     getAllCount(state) {
-      var total = 0;
-      state.cart.forEach(item => {
-        total += item.num;
-      });
-      return total;
+      return state.cart.reduce((prev, cur) => {
+        prev += cur.num;
+        return prev;
+      }, 0);
     }
   },
   actions: {
@@ -156,26 +155,20 @@ export default new Vuex.Store({
       var result = await axios.delete(`/address/${addrInfo.id}`);
       context.dispatch("getAddr");
     },
-    getCart(context) {
-      (async function() {
-        var result = await axios.get("/cart");
-        context.commit("setCart", result.data);
-      })();
-    },
     async getCart(context) {
-      var result = await axios.get("/cart");
+      var result = await axios.get("/cart/list");
       context.commit("setCart", result.data);
     },
     async postCart(context, goodsInfo) {
-      var result = await axios.post("/cart", goodsInfo);
+      var result = await axios.post("/cart/addcart", goodsInfo);
       context.dispatch("getCart");
     },
     async putCart(context, goodsInfo) {
-      var result = await axios.put("/cart", goodsInfo);
+      var result = await axios.put("/cart/updatecart", goodsInfo);
       context.dispatch("getCart");
     },
     async deleteCart(context, goodsInfo) {
-      var result = await axios.delete("/cart", { data: goodsInfo });
+      var result = await axios.delete("/cart/delcart", { data: goodsInfo });
       context.dispatch("getCart");
     }
   },

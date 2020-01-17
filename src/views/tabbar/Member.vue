@@ -1,12 +1,21 @@
 <template>
   <div class="member">
+    <van-nav-bar title="个人中心" fixed> </van-nav-bar>
     <van-cell-group>
       <van-cell
-        title="账号与安全"
-        icon="user-o"
+        title="订单管理"
+        icon="orders-o"
         size="large"
         is-link
-        to="/member/account"
+        to="/member/address"
+      >
+      </van-cell>
+      <van-cell
+        title="收货地址管理"
+        icon="location-o"
+        size="large"
+        is-link
+        to="/member/address"
       >
       </van-cell>
       <van-cell
@@ -18,11 +27,11 @@
       >
       </van-cell>
       <van-cell
-        title="收货地址管理"
-        icon="location-o"
+        title="账号与安全"
+        icon="user-o"
         size="large"
         is-link
-        to="/member/address"
+        to="/member/account"
       >
       </van-cell>
     </van-cell-group>
@@ -51,4 +60,8 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.member {
+  padding-top: 50px;
+}
+</style>

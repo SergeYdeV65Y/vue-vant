@@ -1,5 +1,6 @@
 <template>
   <div class="pay">
+    <navbar title="确认订单"></navbar>
     <!-- 有默认地址 -->
     <div class="panel" v-if="typeof getAddress === 'object'">
       <div class="left">
@@ -75,6 +76,7 @@
 import { getPay, createOrder } from "../../assets/api/pay.js";
 import { Dialog } from "vant";
 import { mapState, mapGetters } from "vuex";
+import navbar from "../../components/Navbar";
 export default {
   props: ["arr"],
   data() {
@@ -95,23 +97,9 @@ export default {
     showPopup() {
       this.flag = true;
     },
-    // 结算订单
-    onSubmit() {
-      var goodsName = "小米";
-      var count = 5;
-      var price = 20;
-      var cost = 100;
-      var payName = "root";
-      var data = {
-        payName: payName,
-        goodsName: goodsName,
-        count: count,
-        price: price,
-        cost: cost
-      };
+    buy(data) {
       getPay(data).then(result => {
         if (result.code == 200) {
-          console.log(this.goods);
           Dialog.confirm({
             title: "确认支付此订单？"
           })
@@ -126,6 +114,16 @@ export default {
               // on cancel
             });
         }
+      });
+    },
+    // 结算订单
+    onSubmit() {
+      this.buy({
+        payName: "root",
+        goodsName: Date.now(),
+        count: this.num,
+        price: this.price / 100,
+        cost: this.price / 100
       });
     },
     getGoods(id) {
@@ -152,12 +150,15 @@ export default {
   computed: {
     ...mapState(["address", "cart"]),
     ...mapGetters(["getAddress"])
+  },
+  components: {
+    navbar
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .pay {
-  padding: 10px;
+  padding: 50px 0;
   .panel {
     display: flex;
     border: 1px solid #ccc;
@@ -184,7 +185,7 @@ export default {
       p {
         margin: 3px 0;
         padding: 0;
-        font-size: 12px;
+        font-size: 0.75rem;
         span:first-child {
           font-size: 1.5rem;
         }
@@ -195,6 +196,7 @@ export default {
       width: 15%;
       justify-content: center;
       align-items: center;
+      color: #666;
     }
     .extra {
       display: flex;
@@ -202,6 +204,9 @@ export default {
       height: 40px;
       justify-content: center;
       align-items: center;
+      a {
+        color: #333;
+      }
     }
   }
   .van-col {
@@ -219,14 +224,11 @@ export default {
       margin-left: 15px;
     }
   }
-  .van-button {
-    height: 100%;
-  }
   .van-submit-bar__bar {
     -webkit-justify-content: space-between;
     justify-content: space-between;
   }
-  .van-panel:nth-child(3) {
+  .van-panel:nth-child(4) {
     border: 2px solid #ddd;
     border-radius: 5px;
   }

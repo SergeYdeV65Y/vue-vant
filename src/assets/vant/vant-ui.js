@@ -1,5 +1,6 @@
 import Vue from "vue";
 import {
+  ActionSheet,
   AddressEdit,
   AddressList,
   Area,
@@ -10,12 +11,13 @@ import {
   Checkbox,
   CheckboxGroup,
   Col,
-  ContactCard,
-  ContactList,
-  ContactEdit,
+  CountDown,
   Dialog,
   Divider,
   Field,
+  GoodsAction,
+  GoodsActionButton,
+  GoodsActionIcon,
   Grid,
   GridItem,
   Icon,
@@ -24,21 +26,34 @@ import {
   Lazyload,
   List,
   NavBar,
+  NoticeBar,
+  Notify,
   Panel,
   Popup,
   PullRefresh,
+  Rate,
   Row,
+  Search,
+  Sidebar,
+  SidebarItem,
   Stepper,
+  Sticky,
   SubmitBar,
   Swipe,
   SwipeCell,
   SwipeItem,
+  Tab,
   Tabbar,
   TabbarItem,
+  Tabs,
   Toast,
-  Uploader
+  TreeSelect,
+  Uploader,
+  skeleton,
+  tag
 } from "vant";
 
+Vue.use(ActionSheet);
 Vue.use(AddressEdit);
 Vue.use(AddressList);
 Vue.use(Area);
@@ -49,12 +64,13 @@ Vue.use(CellGroup);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Col);
-Vue.use(ContactCard);
-Vue.use(ContactList);
-Vue.use(ContactEdit);
+Vue.use(CountDown);
 Vue.use(Dialog);
 Vue.use(Divider);
 Vue.use(Field);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
 Vue.use(Grid);
 Vue.use(GridItem);
 Vue.use(Icon);
@@ -63,16 +79,28 @@ Vue.use(ImagePreview);
 Vue.use(Lazyload);
 Vue.use(List);
 Vue.use(NavBar);
+Vue.use(NoticeBar);
+Vue.use(Notify);
 Vue.use(Panel);
 Vue.use(Popup);
 Vue.use(PullRefresh);
+Vue.use(Rate);
 Vue.use(Row);
+Vue.use(Search);
+Vue.use(Sidebar);
+Vue.use(SidebarItem);
 Vue.use(Stepper);
+Vue.use(Sticky);
 Vue.use(SubmitBar);
 Vue.use(Swipe);
 Vue.use(SwipeCell);
 Vue.use(SwipeItem);
+Vue.use(Tab);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
+Vue.use(Tabs);
 Vue.use(Toast);
+Vue.use(TreeSelect);
 Vue.use(Uploader);
+Vue.use(skeleton);
+Vue.use(tag);

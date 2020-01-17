@@ -1,10 +1,13 @@
 <template>
   <div class="cart">
-    <van-row type="flex" justify="space-between">
-      <van-col span="6">购物车</van-col>
-      <van-col v-show="flag" span="6" @click="manage">管理</van-col>
-      <van-col v-show="!flag" span="6" @click="manage">完成</van-col>
-    </van-row>
+    <van-nav-bar
+      title="购物车"
+      right-text="管理"
+      fixed
+      @click-right="onClickRight"
+      ref="manage"
+    >
+    </van-nav-bar>
     <van-checkbox-group
       v-model="result"
       ref="checkboxGroup"
@@ -75,7 +78,7 @@ export default {
           setTimeout(() => {
             this.putCart(this.cart[i]);
             this.canclick = true;
-          }, 1000);
+          }, 500);
         }
         // this.updateGoodsInfo(this.cart[i]);
       }
@@ -95,7 +98,10 @@ export default {
         });
     },
     // 切换批量删除功能
-    manage() {
+    onClickRight() {
+      this.$refs.manage.lastChild.firstChild.innerText = this.flag
+        ? "完成"
+        : "管理";
       this.flag = !this.flag;
     },
     // clickPosition 表示关闭时点击的位置
@@ -169,16 +175,19 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .cart {
-  padding: 5px;
+  padding-top: 50px;
   .van-col {
     font-size: 1.5rem;
     text-align: center;
   }
-  .van-checkbox__icon {
-    border-radius: 50%;
-    border: 2px solid #f00;
+  .van-nav-bar__text {
+    color: #666;
+  }
+  .van-checkbox__icon--round .van-icon {
+    border-radius: 100%;
+    border: 1px solid #666;
   }
   .van-submit-bar {
     position: fixed;

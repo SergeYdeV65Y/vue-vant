@@ -2,8 +2,9 @@
   <div class="home">
     <!-- 轮播图 swiper -->
     <swiper :bannerlist="bannerlist" :isfull="true"></swiper>
+    <div></div>
     <!-- grid 宫格 -->
-    <van-grid :border="false" :column-num="3" class="mt">
+    <van-grid :border="false" :column-num="3">
       <van-grid-item to="/search">
         <van-image
           round
@@ -80,10 +81,12 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .home {
-  .mt {
-    margin-top: 10px;
+  .van-grid-item__content {
+    span {
+      font-size: 1rem;
+    }
   }
 }
 </style>
