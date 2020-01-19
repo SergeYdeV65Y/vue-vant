@@ -13,8 +13,8 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 import navbar from "../../components/Navbar";
+import { mapState } from "vuex";
 export default {
   data() {
     return {

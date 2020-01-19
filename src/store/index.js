@@ -6,11 +6,13 @@ Vue.use(Vuex);
 // 每次刚进入网站便会调用 main.js，在调用的时候，先从本地存储中把地址的数据读出来，放到 store 中
 const address = JSON.parse(localStorage.getItem("address") || "[]");
 const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+const uname = JSON.parse(localStorage.getItem("uname") || "");
 export default new Vuex.Store({
   state: {
     // this.$store.state.属性
     address: address,
-    cart: cart
+    cart: cart,
+    uname: uname
   },
   mutations: {
     // 专门负责修改 state 中的变量
@@ -23,6 +25,10 @@ export default new Vuex.Store({
     setCart(state, cart) {
       state.cart = cart;
       localStorage.setItem("cart", JSON.stringify(state.cart));
+    },
+    setUname(state, uname) {
+      state.uname = uname;
+      localStorage.setItem("uname", JSON.stringify(state.uname));
     },
     // 添加地址
     addAddr(state, addrInfo) {
@@ -138,21 +144,16 @@ export default new Vuex.Store({
     },
     postAddr(context, addrInfo) {
       (async function() {
-        var result = await axios.post("/address", addrInfo);
-        // var result2 = await context.dispatch("getAddr");
+        await axios.post("/address", addrInfo);
         context.dispatch("getAddr");
       })();
     },
     async putAddr(context, addrInfo) {
-      var result = await axios.put(
-        `/address/${addrInfo.id}`,
-        // Qs.stringify(addrInfo)
-        addrInfo
-      );
+      await axios.put(`/address/${addrInfo.id}`, addrInfo);
       context.dispatch("getAddr");
     },
     async deleteAddr(context, addrInfo) {
-      var result = await axios.delete(`/address/${addrInfo.id}`);
+      await axios.delete(`/address/${addrInfo.id}`);
       context.dispatch("getAddr");
     },
     async getCart(context) {
@@ -160,15 +161,15 @@ export default new Vuex.Store({
       context.commit("setCart", result.data);
     },
     async postCart(context, goodsInfo) {
-      var result = await axios.post("/cart/addcart", goodsInfo);
+      await axios.post("/cart/addcart", goodsInfo);
       context.dispatch("getCart");
     },
     async putCart(context, goodsInfo) {
-      var result = await axios.put("/cart/updatecart", goodsInfo);
+      await axios.put("/cart/updatecart", goodsInfo);
       context.dispatch("getCart");
     },
     async deleteCart(context, goodsInfo) {
-      var result = await axios.delete("/cart/delcart", { data: goodsInfo });
+      await axios.delete("/cart/delcart", { data: goodsInfo });
       context.dispatch("getCart");
     }
   },

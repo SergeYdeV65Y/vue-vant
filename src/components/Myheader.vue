@@ -33,8 +33,6 @@ export default {
   methods: {
     handleScroll() {
       const top = document.documentElement.scrollTop;
-      // console.log(top);
-
       if (top > 60) {
         this.opacityStyle = { opacity: "0.7" };
         this.showAbs = false;
@@ -45,5 +43,4 @@ export default {
   }
 };
 </script>
-
 <style></style>

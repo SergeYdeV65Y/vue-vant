@@ -83,16 +83,16 @@ const routes = [
   },
   // 登录注册相关路由
   {
-    path: "/register",
-    name: "register",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/login/Register.vue")
-  },
-  {
     path: "/login",
     name: "login",
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/login/Login.vue")
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/login/Register.vue")
   },
   {
     path: "/codelogin",
@@ -104,13 +104,7 @@ const routes = [
     path: "/forgetpwd",
     name: "forgetpwd",
     component: () =>
-      import(/* webpackChunkName: "register" */ "../views/login/Forgetpwd.vue")
-  },
-  {
-    path: "/login/pawreset",
-    name: "pawreset",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/login/pawreset.vue")
+      import(/* webpackChunkName: "forgetpwd" */ "../views/login/ForgetPwd.vue")
   }
 ];
 
@@ -120,20 +114,20 @@ const router = new VueRouter({
   routes
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requireAuth) {
-//     const token = window.localStorage.getItem("token");
-//     if (token) {
-//       next();
-//     } else {
-//       next({
-//         path: "/login/login",
-//         query: { redirect: to.fullPath }
-//       });
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      next();
+    } else {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

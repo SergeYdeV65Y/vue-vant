@@ -16,10 +16,10 @@
   </div>
 </template>
 <script>
+import navbar from "../../components/Navbar";
 import areaList from "../../assets/vant/areaList";
 import { Toast } from "vant";
 import { mapState, mapMutations, mapActions } from "vuex";
-import navbar from "../../components/Navbar";
 export default {
   props: ["id"],
   data() {

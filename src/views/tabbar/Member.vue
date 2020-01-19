@@ -36,27 +36,24 @@
       </van-cell>
     </van-cell-group>
     <van-divider></van-divider>
-    <van-button type="primary" size="large">退出登录</van-button>
+    <van-button type="primary" size="large" @click="logout"
+      >退出登录</van-button
+    >
+    <h3>欢迎{{ uname }}</h3>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
-  created() {
-    // this.getAddr()
-  },
   methods: {
-    ...mapActions([
-      // 去vuex的actions中取出名为getAddr的函数放到此地
-      "getAddr"
-    ])
-    /**
-     * login(user){
-     *   this.$store.dispatch("login",user)
-     * },
-     * logout(){...},
-     * register(){...}
-     */
+    logout() {
+      window.localStorage.removeItem("token");
+      this.$store.state.cart = [];
+      this.$router.push({ path: `/home` });
+    }
+  },
+  computed: {
+    ...mapState(["uname"])
   }
 };
 </script>

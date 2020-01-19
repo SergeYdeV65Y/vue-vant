@@ -21,7 +21,7 @@
         v-model="uname"
         required
         placeholder="请输入用户名"
-        :error-message="usermsg"
+        :error-message="umsg"
       />
       <van-field
         v-model="pwd"
@@ -84,25 +84,22 @@ import navbar from "../../components/Navbar";
 import { Toast } from "vant";
 import { reguser } from "../../assets/api/user";
 export default {
-  components: {
-    navbar
-  },
   data() {
     return {
       showTime: true,
-      time: 5 * 1000,
+      time: 5 * 1000, // 短信倒计时
       phone: "13510740753",
       // phone: "",
       uname: "lam",
       pwd: "123",
+      code: 123,
       phmsg: "",
-      usermsg: "",
+      umsg: "",
       pwdmsg: "",
       codemsg: "",
-      code: 123,
       phcode: 123, // 手机短信验证码
-      disabled: true, // 同意协议
-      showPwd: true
+      showPwd: true,
+      disabled: true // 同意协议
     };
   },
   methods: {
@@ -120,17 +117,17 @@ export default {
       this.phcode = 123;
       setTimeout(() => {
         this.showTime = !this.showTime;
-      }, 1000 * 5);
+      }, this.time);
     },
     // 提交用户信息
-    onClickButtonSubmit(e, phone, code) {
+    onClickButtonSubmit(e) {
       let reg = /^1[3456789]\d{9}$/;
       if (this.phone == "") {
         this.phmsg = "手机号码不能为空";
         return false;
       }
       if (this.uname == "") {
-        this.usermsg = "用户名不能为空";
+        this.umsg = "用户名不能为空";
         return false;
       }
       if (this.pwd == "") {
@@ -167,16 +164,17 @@ export default {
           }
         });
       }
-    },
-    onSwipeRight() {
-      this.$router.go(-1);
     }
+  },
+  components: {
+    navbar
   }
 };
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 .register {
+  // display: flex;
+  // flex-direction: column;
   flex: 1;
   align-items: center;
   height: 100%;
@@ -201,6 +199,10 @@ export default {
   }
   .mt {
     margin-top: 10px;
+  }
+  .van-checkbox__icon--round .van-icon {
+    border-radius: 100%;
+    border: 1px solid #666;
   }
 }
 </style>

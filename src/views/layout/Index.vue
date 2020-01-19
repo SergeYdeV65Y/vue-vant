@@ -28,14 +28,22 @@ export default {
   },
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
-    if (window.localStorage.getItem("token")) {
-      this.getAddr();
-      this.getCart();
-    }
+    this.getAddr();
+    this.getCart();
   },
   methods: {
-    // 去vuex的actions中取出名为 getAddr的函数放到此地
-    ...mapActions(["getAddr", "getCart"]),
+    ...mapActions([
+      // 去 vuex 的 actions 中取出名为 getAddr 的函数放到此地
+      "getAddr",
+      "getCart"
+    ]),
+    /**
+     * login(user){
+     *   this.$store.dispatch("login",user)
+     * },
+     * logout(){...},
+     * register(){...}
+     */
     // 点击后退
     goBack() {
       this.$router.go(-1);

@@ -24,7 +24,7 @@ export default {
         desc:
           "酷睿双核i5处理器|256GB SSD|8GB内存|英特尔HD显卡620含共享显卡内存",
         title: "Apple MacBook Air系列",
-        thumb: "http://112.74.206.213/img/product/md/57ad359dNd4a6f130.jpg"
+        thumb: "/img/index/study_computer_img1.png"
       },
       goodsinfo2: {
         id: 2,
@@ -37,7 +37,7 @@ export default {
         price: 3899,
         desc: "酷睿双核i5处理器|512GB SSD|2GB内存|英特尔HD独立显卡",
         title: "小米Air 金属超轻薄",
-        thumb: "http://112.74.206.213/img/product/md/57ad8846N64ac3c79.jpg"
+        thumb: "/img/index/study_computer_img2.png"
       },
       goodsinfo3: {
         id: 3,
@@ -51,7 +51,7 @@ export default {
         desc:
           "华硕(ASUS)13.3英寸RX310UQ金属超极本 学生 商务手提轻薄便携超薄笔记本电脑 玫瑰金 13.3英寸I3-7100U/4G/128G固态",
         title: "华硕RX310 金属超极本",
-        thumb: "http://112.74.206.213/img/product/md/57ba6a56N1e3e3d63.jpg"
+        thumb: "/img/index/study_computer_img3.png"
       },
       goodsinfo4: {
         id: 4,
@@ -65,7 +65,7 @@ export default {
         desc:
           "华硕(ASUS)13.3英寸RX310UQ金属超极本 学生 商务手提轻薄便携超薄笔记本电脑 玫瑰金 13.3英寸I3-7100U/4G/128G固态",
         title: "华硕RX310 金属超极本",
-        thumb: "http://112.74.206.213/img/product/md/57ba6a56N1e3e3d63.jpg"
+        thumb: "/img/index/study_computer_img1.png"
       }
     };
   },

@@ -64,7 +64,7 @@
 </template>
 <script>
 import { getBanner } from "../../assets/api/home.js";
-//      对象解构        模块对象，其中包含getIndex()
+//      对象解构        模块对象，其中包含 getIndex()
 import swiper from "../../components/Swiper";
 export default {
   data() {
@@ -73,6 +73,11 @@ export default {
     };
   },
   created() {
+    // this.axios.get("/carousel").then(res => {
+    //   this.bannerlist = res.data;
+    //   console.log(res);
+    //   console.log(this);
+    // });
     getBanner().then(res => (this.bannerlist = res));
   },
   methods: {},
