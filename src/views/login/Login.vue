@@ -111,11 +111,12 @@ export default {
         let data = {
           eid: this.uname,
           pwd: this.pwd,
-          remme: 1
+          remme: 1 // 记住密码
         };
         login(data).then(() => {
           setTimeout(() => {
             if (!!this.$route.query.redirect) {
+              // 登录后调回原路由 $route
               this.$router.push(this.$route.query.redirect);
             } else {
               this.$router.push({ path: `/home` });

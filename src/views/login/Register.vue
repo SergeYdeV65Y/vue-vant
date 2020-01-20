@@ -144,7 +144,7 @@ export default {
       } else {
         let data = {
           phone: this.phone,
-          user_name: this.uname,
+          eid: this.uname,
           pwd: this.pwd
         };
         reguser(data).then(res => {

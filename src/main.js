@@ -2,8 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./assets/vant/vant-ui";
 
+// vant 组件库
+import "./assets/vant/vant-ui";
+// 手机滑动
 import VueTouch from "vue-touch";
 Vue.use(VueTouch, { name: "v-touch" });
 VueTouch.config.swipe = {
@@ -12,8 +14,19 @@ VueTouch.config.swipe = {
 // 图片验证
 import SlideVerify from "vue-monoplasty-slide-verify";
 Vue.use(SlideVerify);
-
-Vue.config.productionTip = false;
+//  图片预览
+import VuePreview from "vue-preview";
+// with parameters install
+Vue.use(VuePreview, {
+  mainClass: "pswp--minimal--dark",
+  barsSize: { top: 0, bottom: 0 },
+  captionEl: false,
+  fullscreenEl: false,
+  shareEl: false,
+  bgOpacity: 0.85,
+  tapToClose: true,
+  tapToToggleControls: false
+});
 
 // axios 拦截器
 import axios from "./assets/api/axios";
@@ -29,19 +42,7 @@ Vue.use(axios);
 // 将 axios 注册到 vue 实例中，由于 axios 不支持 use，所以将实例添加到 vue 原型
 // Vue.prototype.axios = axios;
 
-import VuePreview from "vue-preview";
-
-// with parameters install
-Vue.use(VuePreview, {
-  mainClass: "pswp--minimal--dark",
-  barsSize: { top: 0, bottom: 0 },
-  captionEl: false,
-  fullscreenEl: false,
-  shareEl: false,
-  bgOpacity: 0.85,
-  tapToClose: true,
-  tapToToggleControls: false
-});
+Vue.config.productionTip = false;
 
 new Vue({
   router,

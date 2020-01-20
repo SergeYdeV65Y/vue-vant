@@ -6,7 +6,7 @@ Vue.use(Vuex);
 // 每次刚进入网站便会调用 main.js，在调用的时候，先从本地存储中把地址的数据读出来，放到 store 中
 const address = JSON.parse(localStorage.getItem("address") || "[]");
 const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-const uname = JSON.parse(localStorage.getItem("uname") || "");
+const uname = JSON.parse(localStorage.getItem("uname") || null);
 export default new Vuex.Store({
   state: {
     // this.$store.state.属性
@@ -138,22 +138,22 @@ export default new Vuex.Store({
     getAddr(context) {
       // context 代表整个 vuex 对象
       (async function() {
-        var result = await axios.get("/address");
+        var result = await axios.get("/user/address");
         context.commit("setAddr", result.data);
       })();
     },
     postAddr(context, addrInfo) {
       (async function() {
-        await axios.post("/address", addrInfo);
+        await axios.post("/user/address", addrInfo);
         context.dispatch("getAddr");
       })();
     },
     async putAddr(context, addrInfo) {
-      await axios.put(`/address/${addrInfo.id}`, addrInfo);
+      await axios.put(`/user/address/${addrInfo.id}`, addrInfo);
       context.dispatch("getAddr");
     },
     async deleteAddr(context, addrInfo) {
-      await axios.delete(`/address/${addrInfo.id}`);
+      await axios.delete(`/user/address/${addrInfo.id}`);
       context.dispatch("getAddr");
     },
     async getCart(context) {

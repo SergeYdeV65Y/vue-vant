@@ -39,23 +39,19 @@ axios.interceptors.response.use(
     if (res.data.status == 403) {
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
-      // store.commit("setIslogin", false);
-      // store.commit("setUname", "");
       store.commit("setCart", []);
       store.commit("setUname", "");
     } else if (res.data.code == -1) {
-      // store.commit("setIslogin", false);
       // store.commit("setUname", "");
       alert(res.data.msg + " 请先登录 !");
     } else if (res.data.token) {
       store.commit("setUname", res.data.uname);
-      // store.commit("setIslogin", true);
+      localStorage.setItem("token", res.data.token);
       // if (res.remember === "true") {
       //   localStorage.setItem("token", res.data.token);
       // } else {
       //   sessionStorage.setItem("token", res.data.token);
       // }
-      localStorage.setItem("token", res.data.token);
     }
     return res;
   },

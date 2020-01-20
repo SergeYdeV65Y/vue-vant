@@ -58,6 +58,7 @@ export default {
     },
     onSave(content) {
       Toast("save");
+      content.isDefault = content.isDefault ? 1 : 0;
       content.address =
         content.province +
         content.city +
@@ -65,28 +66,21 @@ export default {
         content.addressDetail;
       if (this.$route.params.id) {
         content.id = this.$route.params.id;
-        this.updateAddr(content);
+        // this.updateAddr(content);
         this.putAddr(content);
       } else {
-        // 需要先获取最大的 id 再 ++
-        content.id =
-          parseInt(
-            this.address.reduce((prev, item) => {
-              return (prev = prev > item.id ? prev : item.id);
-            }, 0)
-          ) + 1;
-        this.addAddr(content);
+        // this.addAddr(content);
         this.postAddr(content);
       }
       // this.$router.push("/member/address");
       // 返回源路由
       setTimeout(() => {
         this.$router.go(-1);
-      }, 100);
+      }, 200);
     },
     onDelete(content) {
       Toast("delete");
-      this.delAddr(content);
+      // this.delAddr(content);
       this.deleteAddr(content);
       setTimeout(() => {
         this.$router.go(-1);

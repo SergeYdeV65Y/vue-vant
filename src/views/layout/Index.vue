@@ -28,8 +28,10 @@ export default {
   },
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
-    this.getAddr();
-    this.getCart();
+    if (localStorage.getItem("token")) {
+      this.getAddr();
+      this.getCart();
+    }
   },
   methods: {
     ...mapActions([
