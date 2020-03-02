@@ -36,9 +36,9 @@
       </van-cell>
     </van-cell-group>
     <van-divider></van-divider>
-    <van-button type="primary" size="large" @click="logout"
-      >退出登录</van-button
-    >
+    <van-button type="primary" size="large" @click="logout">
+      退出登录
+    </van-button>
     <h3>欢迎{{ uname }}</h3>
   </div>
 </template>

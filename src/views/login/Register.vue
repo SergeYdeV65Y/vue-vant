@@ -9,26 +9,28 @@
         src="/img/index/avatar-default.png"
       />
     </div>
-
-    <van-cell-group>
+    <van-form @submit="onSubmit">
       <van-field
         v-model="phone"
-        required
-        placeholder="请输入手机号"
-        :error-message="phmsg"
+        maxlength="11"
+        name="手机号码"
+        placeholder="手机号码"
+        :rules="[{ required: true, message: '请填写手机号码' }]"
+        ref="phone"
       />
       <van-field
         v-model="uname"
-        required
-        placeholder="请输入用户名"
-        :error-message="umsg"
+        name="用户名"
+        placeholder="用户名"
+        :rules="[{ required: true, message: '请填写用户名' }]"
       />
       <van-field
         v-model="pwd"
         :type="showPwd ? 'password' : 'text'"
-        required
-        placeholder="请输入密码"
-        :error-message="pwdmsg"
+        name="密码"
+        placeholder="请输入6~14位的密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+        ref="pwd"
       >
         <van-icon
           :name="showPwd ? 'closed-eye' : 'eye'"
@@ -38,16 +40,17 @@
       </van-field>
       <van-field
         v-model="code"
-        type="text"
-        placeholder="请输入验证码"
-        :error-message="codemsg"
+        name="验证码"
+        placeholder="验证码"
+        :rules="[{ required: true, message: '请填写验证码' }]"
+        ref="code"
       >
         <van-button
           slot="button"
           size="small"
           type="primary"
           v-if="showTime"
-          @click="sms"
+          @click.prevent="sender"
         >
           获取验证码
         </van-button>
@@ -57,113 +60,105 @@
           </template>
         </van-count-down>
       </van-field>
-    </van-cell-group>
-    <van-row type="flex" justify="center" class="mt">
-      <van-col span="22">
-        <van-button
-          type="primary"
-          :disabled="!disabled"
-          size="large"
-          @click="onClickButtonSubmit"
-        >
-          同意协议注册
-        </van-button>
-      </van-col>
-    </van-row>
-    <van-row type="flex" justify="center" class="mt">
-      <van-col span="22">
-        <van-checkbox v-model="disabled" checked-color="#07c160">
-          已阅读并同意以下协议
-        </van-checkbox>
-      </van-col>
-    </van-row>
+      <van-row type="flex" justify="center" class="mt">
+        <van-col span="20">
+          <sup v-if="!showTime">短信验证码已经发送，请你在2分钟内填写</sup>
+        </van-col>
+      </van-row>
+      <van-row type="flex" justify="center" class="mt">
+        <van-col span="20">
+          <van-button
+            round
+            block
+            type="primary"
+            :disabled="!disabled"
+            size="large"
+            native-type="submit"
+          >
+            同意协议注册
+          </van-button>
+        </van-col>
+      </van-row>
+      <van-row type="flex" justify="center" class="mt">
+        <van-col span="20">
+          <van-checkbox v-model="disabled" checked-color="#07c160">
+            已阅读并同意以下协议
+          </van-checkbox>
+        </van-col>
+      </van-row>
+    </van-form>
   </div>
 </template>
 <script>
 import navbar from "../../components/Navbar";
 import { Toast } from "vant";
-import { reguser } from "../../assets/api/user";
+import { reguser, sms } from "../../assets/api/user";
 export default {
   data() {
     return {
-      showTime: true,
-      time: 5 * 1000, // 短信倒计时
-      phone: "13510740753",
-      // phone: "",
-      uname: "lam",
-      pwd: "123",
-      code: 123,
-      phmsg: "",
-      umsg: "",
-      pwdmsg: "",
-      codemsg: "",
-      phcode: 123, // 手机短信验证码
-      showPwd: true,
+      phone: "",
+      uname: "",
+      pwd: "",
+      code: "",
+      phcode: "", // 手机短信验证码
+      showTime: true, // 验证码按钮显示
+      time: 60 * 1000, // 短信倒计时
+      showPwd: true, // 密码显示
       disabled: true // 同意协议
     };
   },
   methods: {
-    // 获取短信验证
-    sms() {
-      // let params = {
-      //   phone: this.phone
-      // };
-      // this.$minApi.short(params).then(res => {
-      //   this.coder = res.data;
-      //   console.log(res);
-      // });
-      // console.log(params);
-      this.showTime = !this.showTime;
-      this.phcode = 123;
-      setTimeout(() => {
-        this.showTime = !this.showTime;
-      }, this.time);
-    },
     // 提交用户信息
-    onClickButtonSubmit(e) {
-      let reg = /^1[3456789]\d{9}$/;
-      if (this.phone == "") {
-        this.phmsg = "手机号码不能为空";
+    onSubmit(values) {
+      let regphone = /^1[3456789]\d{9}$/;
+      let regpwd = /^\w{6,14}$/;
+      if (!regphone.test(this.phone)) {
+        this.$refs.phone.validateMessage = "手机号码格式不正确";
         return false;
       }
-      if (this.uname == "") {
-        this.umsg = "用户名不能为空";
-        return false;
-      }
-      if (this.pwd == "") {
-        this.pwdmsg = "密码不能为空";
-        return false;
-      }
-      if (!reg.test(this.phone)) {
-        this.phmsg = "请输入有效的手机号码";
+      if (!regpwd.test(this.pwd)) {
+        this.$refs.pwd.validateMessage = "密码长度为6~14的字符，字母/数字";
         return false;
       }
       if (this.code != this.phcode) {
-        this.codemsg = "验证码错误";
+        this.$refs.code.validateMessage = "您输入的验证码有误";
         return false;
-      } else {
-        let data = {
-          phone: this.phone,
-          eid: this.uname,
-          pwd: this.pwd
-        };
-        reguser(data).then(res => {
-          console.log(res);
-          if (res.code != 1) {
-            this.phmsg = res.msg;
-          } else {
-            Toast.loading({
-              message: res.msg + "请登录",
-              forbidClick: true,
-              loadingType: "spinner",
-              duration: 1000 // 持续展示 toast
-            });
-            setTimeout(() => {
-              this.$router.push({ path: `/login` });
-            }, 1000);
-          }
-        });
       }
+      let data = {
+        phone: this.phone,
+        eid: this.uname,
+        pwd: this.pwd
+      };
+      reguser(data).then(res => {
+        console.log(res);
+        if (res.code != 1) {
+          console.log(res.msg);
+          this.$refs.phone.validateMessage = res.msg;
+        } else {
+          Toast.loading({
+            message: res.msg + "请登录",
+            forbidClick: true,
+            loadingType: "spinner",
+            duration: 1000 // 持续展示 toast
+          });
+          setTimeout(() => {
+            this.$router.push({ path: `/login` });
+          }, 1000);
+        }
+      });
+    },
+    // 获取短信验证
+    sender() {
+      let params = this.phone;
+      if (!params) {
+        this.$refs.phone.validateMessage = "请您输入手机号码";
+        return false;
+      }
+      sms(params).then(res => (this.phcode = res.data));
+      this.showTime = !this.showTime;
+      setTimeout(() => {
+        this.showTime = !this.showTime;
+      }, this.time);
     }
   },
   components: {

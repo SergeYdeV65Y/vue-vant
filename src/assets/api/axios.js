@@ -1,6 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import store from "../../store/index";
+import { Toast } from "vant";
 
 // const instance = axios.create({
 //   baseURL: "http://localhost:3000",
@@ -42,8 +43,9 @@ axios.interceptors.response.use(
       store.commit("setCart", []);
       store.commit("setUname", "");
     } else if (res.data.code == -1) {
-      // store.commit("setUname", "");
-      alert(res.data.msg + " 请先登录 !");
+      store.commit("setCart", []);
+      store.commit("setUname", "");
+      Toast(res.data.msg + "，账号或者密码错误！");
     } else if (res.data.token) {
       store.commit("setUname", res.data.uname);
       localStorage.setItem("token", res.data.token);

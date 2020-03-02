@@ -15,6 +15,7 @@ import {
   Dialog,
   Divider,
   Field,
+  Form,
   GoodsAction,
   GoodsActionButton,
   GoodsActionIcon,
@@ -68,6 +69,7 @@ Vue.use(CountDown);
 Vue.use(Dialog);
 Vue.use(Divider);
 Vue.use(Field);
+Vue.use(Form);
 Vue.use(GoodsAction);
 Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
